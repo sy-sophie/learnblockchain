@@ -1,8 +1,12 @@
+'use client'
+export default function WalletWeb3Modal() {
 
-export default function Home() {
-  return (
-      <div>
-        111
-      </div>
-  );
+    return (
+        <div>
+            <div>
+                WalletWeb3Modal
+            </div>
+            <w3m-button/>
+        </div>
+    )
 }
