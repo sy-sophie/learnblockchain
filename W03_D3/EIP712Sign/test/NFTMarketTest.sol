@@ -65,10 +65,6 @@ contract NFTMarketTest is Test {
     }
 
     function testPermitBuy() public {
-        // 项目方 把 buyer 放到白名单中，nftMarket.
-        vm.startPrank(projectSide);
-        nftMarket.addToWhitelist(buyer);
-        vm.stopPrank();
 
         // buyer nftMarket.permitBuy 购买
         vm.startPrank(buyer);

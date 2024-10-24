@@ -19,7 +19,6 @@ contract NFTMarket is IERC777Recipient {
     }
 
     mapping(uint256 => Listing) public listings;
-    mapping(address => bool) public whitelist;
     mapping(bytes => bool) public usedSignatures;
 
 
@@ -51,7 +50,6 @@ contract NFTMarket is IERC777Recipient {
         delete listings[tokenId]; // Remove the listing after purchase
     }
     function permitBuy(address buyer, bytes memory signature, uint256 tokenId, uint256 amount) external{
-        require(whitelist[buyer], "Not whitelisted");  // 确保购买者在白名单中
 
         bytes32 messageHash = keccak256(abi.encodePacked(buyer));
         bytes32 ethSignedMessageHash = MessageHashUtils.toEthSignedMessageHash(messageHash); // Convert to eth signed message hash
@@ -68,10 +66,6 @@ contract NFTMarket is IERC777Recipient {
 
 
         usedSignatures[signature] = true;
-    }
-
-    function addToWhitelist(address user) external {
-        whitelist[user] = true;
     }
 
     function tokensReceived(
