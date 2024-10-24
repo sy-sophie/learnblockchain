@@ -1,0 +1,21 @@
+{
+  "name": "w03_d4",
+  "version": "1.0.0",
+  "description": "- 1. 获取方法ID：交易数据的前4个字节是方法ID。在你的交易数据中，前4个字节是 0xa9059cbb ![img.png](img.png) ```solidity transfer(address,uint256) ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^6.13.4",
+    "viem": "^2.21.34"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
