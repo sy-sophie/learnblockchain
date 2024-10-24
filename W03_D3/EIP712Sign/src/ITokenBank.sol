@@ -8,7 +8,6 @@ interface ITokenBank {
 
     function permitDeposit(
         address owner,   // 代币持有者地址
-        address spender, // 被授权的地址
         uint256 value,   // 授权的代币数量
         uint256 deadline,// 签名截止时间
         uint8 v,         // 签名参数，恢复参数，用于恢复签名者的公钥
