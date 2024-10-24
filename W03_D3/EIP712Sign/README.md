@@ -110,8 +110,7 @@ $ cast --help
     }
 ```
 # TokenBan测试
-![img.png](image/img.pngmg.png)
+![img.png](img.png)
 
 # NFTMarket测试
-
-![img_1.png](image/img_1.png_1.png)
+![img_1.png](img_1.png)
