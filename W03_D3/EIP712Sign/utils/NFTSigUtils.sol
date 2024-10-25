@@ -35,7 +35,6 @@ contract NFTSigUtils {
             )
         );
     }
-    // TODO view
     function getTypedDataHash(Permit memory _permit) public returns (bytes32){
         return
             keccak256( // 使用 keccak256 对域分隔符和结构体哈希值进行编码并返回哈希值
