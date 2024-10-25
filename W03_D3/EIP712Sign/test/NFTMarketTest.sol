@@ -7,85 +7,101 @@ import "../src/MyToken.sol";
 import "../src/MyNFT.sol";
 import "../src/NFTMarket.sol";
 import "../utils/NFTSigUtils.sol";
-import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
+//import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
 
 
 contract NFTMarketTest is Test {
+    NFTSigUtils internal nftSigUtils;
+
     MyToken public mToken;
     MyNFT public mNFT;
     NFTMarket public nftMarket;
-    NFTSigUtils internal nftSigUtils;
+
+    address internal projectOwner;
+    address public buyer;
+    address public seller;
 
     uint256 internal initialSupply = 1000 * 10 ** 18;
 
     // 购买者 buyer
-    uint256 internal buyerPrivateKey;
-    address internal buyer;
+//    uint256 internal buyerPrivateKey;
 
     // 项目方 projectOwner
-    uint256 internal projectOwnerPrivateKey;
-    address internal projectOwner;
-
-    // signature
-    bytes internal signature;
+//    uint256 internal projectOwnerPrivateKey;
 
     function setUp() public {
-        buyerPrivateKey = 0xA11CE;
-        buyer = vm.addr(buyerPrivateKey);
-        projectOwnerPrivateKey = 0xB0B;
-        projectOwner = vm.addr(projectOwnerPrivateKey);
+        // 设置初始账户和合约
+        projectOwner = vm.addr(0x123);
+        buyer = vm.addr(0x456);
+        seller = vm.addr(0x789);
 
-        // 1. MyToken：initialSupply(发行量)
-        // 2. MyNFT：MyToken地址(使用MyToken购买)
-        // 3. NFTMarket：MyToken地址，MyNFT
+
         mToken = new MyToken(initialSupply);
         mNFT = new MyNFT(address(mToken));
         nftMarket = new NFTMarket(mNFT, mToken, projectOwner);
-        nftSigUtils = new NFTSigUtils(mToken.DOMAIN_SEPARATOR());
 
-        // 4. 项目方 铸造 MyNF
-        vm.startPrank(projectOwner);
-        mNFT.setApprovalForAll(address(nftMarket), true);
+
+        // 分配代币给买家
+        vm.prank(address(this));
+        mToken.transfer(buyer, initialSupply);
+
+        // 设置买家对市场合约的代币授权
+        vm.prank(buyer);
+        mToken.approve(address(nftMarket), initialSupply); // 授权买家将所有代币转移到市场合约
+
+        // 卖家铸造 NFT 并上架
+        vm.startPrank(seller);
         mNFT.mint(1);
         mNFT.mint(2);
 
-        // 5. 项目方 在 NFTMarket 上架
+        mNFT.approve(address(nftMarket), 1);
+        mNFT.approve(address(nftMarket), 2);
+
         nftMarket.listNFT(1, 2000);
         nftMarket.listNFT(2, 4000);
+
+        // 6. 卖家批准市场合约可以转移 NFT
+//        mNFT.setApprovalForAll(address(nftMarket), true);
         vm.stopPrank();
 
-        // 6. 给 购买者 buyer 钱 mToken.mint
-        mToken.transfer(buyer, initialSupply);
     }
 
     function testPermitBuy() public {
-        uint256 deadline = block.timestamp + 1 days; // 设置许可的截止时间
-        uint256 nonce = mToken.nonces(buyer); // 获取用户的 nonce
+        nftSigUtils = new NFTSigUtils(nftMarket.DOMAIN_SEPARATOR());
+//        nftSigUtils = new NFTSigUtils();
+
+        uint256 tokenId = 1;
+        uint256 deadline = block.timestamp + 1 days;
+        uint256 price = 2000;
         // 创建许可数据
         NFTSigUtils.Permit memory permit = NFTSigUtils.Permit({
             buyer: buyer,
-            projectOwner: projectOwner,
-            tokenId: 1,
-            nonce: nonce,
+            tokenId: tokenId,
             deadline: deadline
         });
 
+        vm.startPrank(projectOwner);
         bytes32 typedDataHash = nftSigUtils.getTypedDataHash(permit);
 
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(buyerPrivateKey, typedDataHash);
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(0x123, typedDataHash); //  买家的私钥 + 消息
 
-        // buyer nftMarket.permitBuy 购买
-        vm.startPrank(buyer);
-        nftMarket.permitBuy( 1, 2000, deadline,v, r, s);
+        bytes memory signature = abi.encodePacked(r, s, v);
         vm.stopPrank();
 
-        // 项目方 是否 收到 钱
-        console.log("mToken.balanceOf(projectOwner)", mToken.balanceOf(projectOwner));
-        assertEq(mToken.balanceOf(projectOwner), 2000);
+        // 使用签名来购买 NFT
+        vm.prank(buyer);
+        nftMarket.permitBuy(buyer,tokenId, price, deadline, signature);
 
-        // buyer 是否收到 nft
-        console.log("mNFT.ownerOf(1)", mNFT.ownerOf(1));
-        assertEq(mNFT.ownerOf(1), buyer);
+        // 验证 NFT 是否成功转移
+        assertEq(mNFT.ownerOf(tokenId), buyer, "NFT should be transferred to buyer");
 
+        // 验证支付是否成功
+        assertEq(mToken.balanceOf(seller), price, "Seller should receive payment");
+
+        // 验证 listing 是否被移除
+        (address sellerAddr, uint256 listedPrice) = nftMarket.listings(tokenId);
+        assertEq(sellerAddr, address(0), "Listing should be removed after purchase");
+        assertEq(listedPrice, 0, "Listing price should be reset to 0");
     }
 }
+
