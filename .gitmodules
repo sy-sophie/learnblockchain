@@ -7,3 +7,6 @@
 [submodule "W03_D3/EIP712Sign/lib/openzeppelin-contracts"]
 	path = W03_D3/EIP712Sign/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "W03_D1/foundry_pro/lib/openzeppelin-contracts"]
+	path = W03_D1/foundry_pro/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
