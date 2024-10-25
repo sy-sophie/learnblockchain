@@ -36,9 +36,6 @@ contract NFTMarketTest is Test {
         vm.prank(address(this));
         mToken.transfer(buyer, initialSupply);
 
-        // 设置买家对市场合约的代币授权
-        vm.prank(buyer);
-        mToken.approve(address(nftMarket), initialSupply); // 授权买家将所有代币转移到市场合约
 
         // 卖家铸造 NFT 并上架
         vm.startPrank(seller);
@@ -61,6 +58,7 @@ contract NFTMarketTest is Test {
         uint256 tokenId = 1;
         uint256 deadline = block.timestamp + 1 days;
         uint256 price = 2000;
+
         // 创建许可数据
         NFTSigUtils.Permit memory permit = NFTSigUtils.Permit({
             buyer: buyer,
@@ -75,6 +73,10 @@ contract NFTMarketTest is Test {
 
         bytes memory signature = abi.encodePacked(r, s, v);
         vm.stopPrank();
+
+        // TODO 授权买家将 price 代币 转移到市场合约
+        vm.prank(buyer);
+        mToken.approve(address(nftMarket), price);
 
         // 使用签名来购买 NFT
         vm.prank(buyer);

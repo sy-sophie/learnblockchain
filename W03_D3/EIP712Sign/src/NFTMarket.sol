@@ -73,11 +73,9 @@ contract NFTMarket is EIP712 {
 
         // 检查买家的代币余额是否足够
         uint256 buyerBalance = paymentToken.balanceOf(buyer);
-        require(buyerBalance >= listing.price, "Buyer does not have enough tokens");
 
-        // 检查买家是否已授权 NFTMarket 合约足够的代币
+        // TODO 检查买家是否已授权 NFTMarket 合约足够的代币
         uint256 allowance = paymentToken.allowance(buyer, address(this));
-        require(allowance >= listing.price, "Insufficient allowance");
 
         paymentToken.transferFrom(buyer, listing.seller, listing.price);
         nftContract.transferFrom(listing.seller, buyer, tokenId);
