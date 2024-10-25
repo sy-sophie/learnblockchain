@@ -4,7 +4,6 @@ pragma solidity ^0.8.13;
 import "./MyToken.sol";
 import "../src/MyNFT.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-//import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
 import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "forge-std/console.sol";
 
@@ -67,7 +66,7 @@ contract NFTMarket is EIP712 {
 
     function permitBuy(address buyer,uint256 tokenId, uint256 amount, uint256 deadline, bytes memory _signature) external {
         // 验签
-        verifySignTwo(msg.sender, tokenId, deadline, _signature);
+        verifySign(msg.sender, tokenId, deadline, _signature);
 
         Listing memory listing = listings[tokenId];
         require(amount >= listing.price, "Insufficient funds");
@@ -80,18 +79,17 @@ contract NFTMarket is EIP712 {
         uint256 allowance = paymentToken.allowance(buyer, address(this));
         require(allowance >= listing.price, "Insufficient allowance");
 
-        // TODO
-//        address nftOwner = nftContract.ownerOf(tokenId);
-//        nftContract.isApprovedForAll(nftOwner, address(this));
-
         paymentToken.transferFrom(buyer, listing.seller, listing.price);
         nftContract.transferFrom(listing.seller, buyer, tokenId);
 
         delete listings[tokenId]; // Remove the listing after purchase
     }
 
-    function verifySignTwo(address buyer, uint256 tokenId, uint256 deadline, bytes memory _signature) public {
+    function verifySign(address buyer, uint256 tokenId, uint256 deadline, bytes memory _signature) public {
         require(_signature.length == 65, "invalid signature length");
+        if (block.timestamp > deadline) {
+            revert ExpiredSignature(deadline);
+        }
         bytes32 r;
         bytes32 s;
         uint8 v;
@@ -120,25 +118,9 @@ contract NFTMarket is EIP712 {
                 deadline
             ))
         ));
-        address signer = digest.recover(v, r, s); // 恢复签名者
+        address signer = ECDSA.recover(digest, v, r, s); // 恢复签名者 address signer = digest.recover(v, r, s);
         if (signer != projectOwner) { // 要等于 项目方 地址
             revert InvalidSigner(signer, projectOwner);
         }
     }
-
-    function verifySign(address buyer, uint256 tokenId, uint256 deadline, uint8 v,
-        bytes32 r,
-        bytes32 s) internal {
-        if (block.timestamp > deadline) {
-            revert ExpiredSignature(deadline);
-        }
-
-        bytes32 structHash = keccak256(abi.encode(PERMIT_TYPEHASH, buyer, projectOwner, tokenId, deadline));
-        bytes32 hash = _hashTypedDataV4(structHash);
-        address signer = ECDSA.recover(hash, v, r, s); // signer
-        if (signer != projectOwner) { // 要等于 项目方 地址
-            revert InvalidSigner(signer, projectOwner);
-        }
-    }
-
 }

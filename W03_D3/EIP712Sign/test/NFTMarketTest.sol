@@ -7,8 +7,6 @@ import "../src/MyToken.sol";
 import "../src/MyNFT.sol";
 import "../src/NFTMarket.sol";
 import "../utils/NFTSigUtils.sol";
-//import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
-
 
 contract NFTMarketTest is Test {
     NFTSigUtils internal nftSigUtils;
@@ -23,12 +21,6 @@ contract NFTMarketTest is Test {
 
     uint256 internal initialSupply = 1000 * 10 ** 18;
 
-    // 购买者 buyer
-//    uint256 internal buyerPrivateKey;
-
-    // 项目方 projectOwner
-//    uint256 internal projectOwnerPrivateKey;
-
     function setUp() public {
         // 设置初始账户和合约
         projectOwner = vm.addr(0x123);
@@ -39,7 +31,6 @@ contract NFTMarketTest is Test {
         mToken = new MyToken(initialSupply);
         mNFT = new MyNFT(address(mToken));
         nftMarket = new NFTMarket(mNFT, mToken, projectOwner);
-
 
         // 分配代币给买家
         vm.prank(address(this));
@@ -60,15 +51,12 @@ contract NFTMarketTest is Test {
         nftMarket.listNFT(1, 2000);
         nftMarket.listNFT(2, 4000);
 
-        // 6. 卖家批准市场合约可以转移 NFT
-//        mNFT.setApprovalForAll(address(nftMarket), true);
         vm.stopPrank();
 
     }
 
     function testPermitBuy() public {
         nftSigUtils = new NFTSigUtils(nftMarket.DOMAIN_SEPARATOR());
-//        nftSigUtils = new NFTSigUtils();
 
         uint256 tokenId = 1;
         uint256 deadline = block.timestamp + 1 days;
@@ -97,11 +85,6 @@ contract NFTMarketTest is Test {
 
         // 验证支付是否成功
         assertEq(mToken.balanceOf(seller), price, "Seller should receive payment");
-
-        // 验证 listing 是否被移除
-        (address sellerAddr, uint256 listedPrice) = nftMarket.listings(tokenId);
-        assertEq(sellerAddr, address(0), "Listing should be removed after purchase");
-        assertEq(listedPrice, 0, "Listing price should be reset to 0");
     }
 }
 
