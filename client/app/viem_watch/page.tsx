@@ -1,6 +1,6 @@
 "use client"
 import {useEffect, useState} from 'react';
-import {createPublicClient, http, parseAbiItem, formatUnits} from 'viem';
+import {createPublicClient, http, parseAbiItem} from 'viem';
 import {mainnet} from 'viem/chains';
 
 const USDT_CONTRACT_ADDRESS = '0xdac17f958d2ee523a2206206994597c13d831ec7';
@@ -10,11 +10,18 @@ const client = createPublicClient({
     chain: mainnet,
     transport: http('https://rpc.flashbots.net'),
 });
+interface TransferLog {
+    blockNumber: string;
+    transactionHash: `0x${string}`;
+    from: `0x${string}` | undefined;
+    to: `0x${string}` | undefined;
+    value: bigint | undefined;
+}
 export default function ViemWatch() {
     const [blockHeight, setBlockHeight] = useState<number | null>(null);
     const [blockHash, setBlockHash] = useState<string | null>(null);
 
-    const [transfersLogs, setTransfersLogs] = useState([]);
+    const [transfersLogs, setTransfersLogs] = useState<TransferLog[]>([]);
     useEffect(() => {
         const getBlockData = async () => {
             const lastBlock = await client.getBlock({blockTag: 'latest'}); // 获取最新区块
@@ -25,7 +32,7 @@ export default function ViemWatch() {
             client.watchBlockNumber({
                 onBlockNumber: async (blockNumber) => {
 
-                    setBlockHeight(Number(blockNumber || 0n));
+                    setBlockHeight(Number(blockNumber || 0));
 
 
                     const logs = await client.getLogs({
