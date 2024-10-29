@@ -13,7 +13,6 @@ contract TokenBankTest is Test {
     SigUtils internal sigUtils;
 
     uint256 internal ownerPrivateKey;
-//    uint256 internal spenderPrivateKey;
 
     address internal owner;
     TokenBank internal spender; // bank
@@ -26,7 +25,6 @@ contract TokenBankTest is Test {
         sigUtils = new SigUtils(token.DOMAIN_SEPARATOR());
 
         ownerPrivateKey = 0xA11CE;
-//        spenderPrivateKey = 0xB0B;
 
         owner = vm.addr(ownerPrivateKey);
         spender = new TokenBank(token);

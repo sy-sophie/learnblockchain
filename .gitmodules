@@ -10,3 +10,24 @@
 [submodule "W03_D1/foundry_pro/lib/openzeppelin-contracts"]
 	path = W03_D1/foundry_pro/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "others/W04_D1/openspace-nftrent-study-0508A/contracts/lib/ds-test"]
+	path = others/W04_D1/openspace-nftrent-study-0508A/contracts/lib/ds-test
+	url = https://github.com/dapphub/ds-test
+[submodule "others/W04_D1/openspace-nftrent-study-0508A/contracts/lib/openzeppelin-contracts"]
+	path = others/W04_D1/openspace-nftrent-study-0508A/contracts/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "W04_D1/contract_factory/lib/forge-std"]
+	path = W04_D1/contract_factory/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "W04_D1/permit2_pro/contract/lib/forge-std"]
+	path = W04_D1/permit2_pro/contract/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "W04_D1/contract_factory/lib/clone-factory"]
+	path = W04_D1/contract_factory/lib/clone-factory
+	url = https://github.com/optionality/clone-factory
+[submodule "W04_D1/permit2_pro/contract/lib/permit2"]
+	path = W04_D1/permit2_pro/contract/lib/permit2
+	url = https://github.com/uniswap/permit2
+[submodule "W04_D1/permit2_pro/contract/lib/openzeppelin-contracts"]
+	path = W04_D1/permit2_pro/contract/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
