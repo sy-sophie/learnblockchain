@@ -8,5 +8,5 @@
  
  forge install OpenZeppelin/openzeppelin-contracts --no-commit
  
- forge remappings
+ forge remappings # remappings.txt
 ```

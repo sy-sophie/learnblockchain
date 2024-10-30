@@ -14,24 +14,12 @@
     <mapping directory="$PROJECT_DIR$/W03_D3/EIP712Sign/lib/openzeppelin-contracts/lib/forge-std" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/W03_D3/EIP712Sign/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/W03_D3/EIP712Sign/lib/openzeppelin-contracts/lib/halmos-cheatcodes" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/contract_factory/lib/clone-factory" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/contract_factory/lib/forge-std" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/forge-std" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/openzeppelin-contracts" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/openzeppelin-contracts/lib/erc4626-tests" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/openzeppelin-contracts/lib/forge-std" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/openzeppelin-contracts/lib/halmos-cheatcodes" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2/lib/forge-gas-snapshot" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2/lib/forge-gas-snapshot/lib/forge-std" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2/lib/forge-gas-snapshot/lib/forge-std/lib/ds-test" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2/lib/forge-std" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2/lib/forge-std/lib/ds-test" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2/lib/openzeppelin-contracts" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2/lib/solmate" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/contract/lib/permit2/lib/solmate/lib/ds-test" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/permit2_pro/viemtutorial" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/W04_D1_old/useful-solidity-patterns" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/W04_D3/contract/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/W04_D3/contract/lib/openzeppelin-contracts" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/W04_D3/contract/lib/openzeppelin-contracts/lib/erc4626-tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/W04_D3/contract/lib/openzeppelin-contracts/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/W04_D3/contract/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/W04_D3/contract/lib/openzeppelin-contracts/lib/halmos-cheatcodes" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/W04_D3/hashlips_art_engine" vcs="Git" />
   </component>
 </project>
