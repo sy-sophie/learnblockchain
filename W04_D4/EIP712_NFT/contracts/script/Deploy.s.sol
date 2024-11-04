@@ -13,7 +13,7 @@ contract DeployAndMintNFT {
         address nftAddress = factory.deployNFT("MyNFT", "MNFT", "ipfs://", 100);
         S2NFT nft = S2NFT(nftAddress);
 
-        nft.mintNFT(4); // 为调用者铸造2个NFT
+//        nft.mintNFT(4); // 为调用者铸造2个NFT
     }
 
 

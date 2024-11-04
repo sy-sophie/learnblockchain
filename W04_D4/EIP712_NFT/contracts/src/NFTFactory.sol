@@ -22,15 +22,15 @@ contract S2NFT is ERC721Enumerable {
     function _baseURI() internal view override returns (string memory) { // 重写ERC721的_baseURI方法，返回基本URI
         return _BASE_URI;
     }
-    function mintNFT(string memory tokenURI) public returns (uint256) {
-        uint256 tokenId = _nextTokenId;
-        _nextTokenId++;
-
-        _safeMint(msg.sender, tokenId);
-        _setTokenURI(tokenId, tokenURI);
-
-        return tokenId;
-    }
+//    function mintNFT(string memory tokenURI) public returns (uint256) {
+//        uint256 tokenId = _nextTokenId;
+//        _nextTokenId++;
+//
+//        _safeMint(msg.sender, tokenId);
+//        _setTokenURI(tokenId, tokenURI);
+//
+//        return tokenId;
+//    }
 
     function freeMint(uint256 amount) external { // 免费铸造函数，允许用户铸造指定数量的NFT
         require(amount <= 5, "You can mint up to 5 tokens at a time"); // 限制每次最多铸造5个Token
