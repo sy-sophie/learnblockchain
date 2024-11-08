@@ -1,0 +1,10 @@
+{
+  "image": "ipfs://<CID>",
+  "name": "My NFT",
+  "supply": 1,
+  "description": "This is a sample NFT description.",
+  "traits": [
+    { "key": "ERC721Enumerable", "value": "blue" },
+    { "key": "ERC721URIStorage", "value": "rare" }
+  ]
+}
