@@ -1,0 +1,22 @@
+{
+  "name": "serve-node",
+  "version": "1.0.0",
+  "main": "src/testmerklet.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/testmerklet.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.4.0"
+  }
+}
