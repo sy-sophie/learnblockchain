@@ -57,16 +57,15 @@ contract AirdopMerkleNFTMarket is Ownable, EIP712 {
 
     /**
        * @notice Call multiple contract static methods in batch
-        * @param targets Target contract addresses array
         * @param data Data array for the calls
         * @return results Results array, a byte array
     */
-    function multicall(address[2] memory targets, bytes[2] memory data) external returns (bytes[] memory results) {
-        require(targets.length == data.length, "Multicall: mismatched lengths");
-        results = new bytes[](targets.length);
+    function multicall( bytes[2] memory data) external returns (bytes[] memory results) {
+//        require(targets.length == data.length, "Multicall: mismatched lengths");
+        results = new bytes[](data.length);
 
-        for (uint i = 0; i < targets.length; i++) {
-            (bool success, bytes memory result) = targets[i].delegatecall(data[i]);
+        for (uint i = 0; i < data.length; i++) {
+            (bool success, bytes memory result) = address(this).delegatecall(data[i]); // TODO targets[i]
             require(success, "Multicall: staticcall failed");
             results[i] = result;
         }

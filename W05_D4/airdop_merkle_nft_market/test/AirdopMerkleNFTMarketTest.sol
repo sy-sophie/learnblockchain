@@ -32,6 +32,7 @@ contract AirdopMerkleNFTMarketTest is Test {
         airdopMerkleNFTMarket = new AirdopMerkleNFTMarket(nftContract, tokenContract, merkleRoot);
 
     }
+
     function test_Airdrop() public {
         uint256 depositAmount = 60;
         // Seller 1: Mint NFT and list it on the market
@@ -77,12 +78,12 @@ contract AirdopMerkleNFTMarketTest is Test {
         );
 
         // 调用 multicall
-        bytes[] memory results = airdopMerkleNFTMarket.multicall(
-            [address(airdopMerkleNFTMarket), address(airdopMerkleNFTMarket)],
-            [permitPrePayData, claimNFTData]
+        bytes[] memory results = airdopMerkleNFTMarket.multicall([permitPrePayData, claimNFTData]
         );
-        vm.stopPrank();
         assertEq(nftContract.ownerOf(tokenId), buyer1_in_w);
+
+
+        vm.stopPrank();
 
     }
 }
